@@ -1,4 +1,4 @@
-import { Image } from "../type";
+import { Image } from "../interface";
 
 export const images: Image[] = [
     { src: 'src/assets/img/exterior.JPG', alt: "Fachada de la Teca de l'Àvia" },

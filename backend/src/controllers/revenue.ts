@@ -2,9 +2,20 @@ import { Request, Response } from 'express';
 import DailyRev from '../models/daily_revenue';
 
 export const getRevenue = async (req: Request, res: Response) => {
+    const { page = 1, limit = 10 } = req.query;
+
     try {
-        const listDailyRev = await DailyRev.findAll();
-        res.json(listDailyRev)
+        const result = await DailyRev.findAndCountAll({
+            limit: Number(limit),
+            offset: (Number(page) - 1) * Number(limit),
+        });
+
+        res.json({
+            total: result.count,
+            pages: Math.ceil(result.count / Number(limit)),
+            currentPage: Number(page),
+            data: result.rows,
+        });
     } catch (error) {
         res.status(500).json({
             msg: 'Ups, there was an error when trying to get all the Daily Revenues',

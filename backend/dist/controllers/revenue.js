@@ -15,9 +15,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateDailyRevenue = exports.postDailyRevenue = exports.deleteDailyRevenue = exports.getDailyRevenue = exports.getRevenue = void 0;
 const daily_revenue_1 = __importDefault(require("../models/daily_revenue"));
 const getRevenue = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { page = 1, limit = 10 } = req.query;
     try {
-        const listDailyRev = yield daily_revenue_1.default.findAll();
-        res.json(listDailyRev);
+        const result = yield daily_revenue_1.default.findAndCountAll({
+            limit: Number(limit),
+            offset: (Number(page) - 1) * Number(limit),
+        });
+        res.json({
+            total: result.count,
+            pages: Math.ceil(result.count / Number(limit)),
+            currentPage: Number(page),
+            data: result.rows,
+        });
     }
     catch (error) {
         res.status(500).json({

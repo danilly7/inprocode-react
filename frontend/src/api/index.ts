@@ -1,0 +1,1 @@
+export const apiRevenue = 'http://localhost:3000/api/revenue';

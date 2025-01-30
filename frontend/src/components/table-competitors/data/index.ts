@@ -1,4 +1,4 @@
-import { Competitor } from "../type";
+import { Competitor } from "../interface";
 
 export const competitors: Competitor[] = [
   {
