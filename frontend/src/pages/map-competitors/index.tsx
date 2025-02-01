@@ -1,5 +1,5 @@
 import { GoogleMap, Marker, LoadScript } from "@react-google-maps/api";
-import { CompetitorsTable } from "../../components/table-competitors";
+import { CompetitorsTable } from "../../components/competitors/competitors-table";
 
 const containerStyle = {
     width: '100%',

@@ -1,4 +1,4 @@
-import { competitors } from "./data";
+import { competitors } from "../data";
 
 export const CompetitorsTable: React.FC = () => {
     return (
@@ -19,7 +19,7 @@ export const CompetitorsTable: React.FC = () => {
                         {competitors.map((competitor, index) => (
                             <tr
                                 key={index}
-                                className={`border-b hover:bg-gray-50 ${competitor.name === 'La Teca de l\'Àvia' ? 'bg-yellow-100' : ''}`}
+                                className={`border-b ${competitor.name === 'La Teca de l\'Àvia' ? 'bg-yellow-100' : ''}`}
                             >
                                 <td className="px-6 py-4">{competitor.name}</td>
                                 <td className="px-6 py-4">{competitor.address}</td>
