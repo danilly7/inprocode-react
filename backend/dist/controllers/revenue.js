@@ -79,18 +79,36 @@ const deleteDailyRevenue = (req, res) => __awaiter(void 0, void 0, void 0, funct
 });
 exports.deleteDailyRevenue = deleteDailyRevenue;
 const postDailyRevenue = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { body } = req;
+    const { title, date, closed, bank_holiday, total_sales, total_clients } = req.body;
     try {
-        yield daily_revenue_1.default.create(body);
+        const newRevenue = yield daily_revenue_1.default.create({
+            title,
+            date,
+            closed,
+            bank_holiday,
+            total_sales,
+            total_clients,
+            weekday_id: new Date(date).getDay(),
+        });
         res.json({
             msg: 'Daily Revenue has been added successfully',
-            body
+            data: newRevenue,
         });
     }
     catch (error) {
-        res.json({
-            msg: `Ups, try again. An error has occured.`
-        });
+        if (error instanceof Error) {
+            console.error('Error adding daily revenue:', error.message);
+            res.status(500).json({
+                msg: 'An error occurred while adding daily revenue',
+                error: error.message,
+            });
+        }
+        else {
+            console.error('Unknown error:', error);
+            res.status(500).json({
+                msg: 'An unknown error occurred',
+            });
+        }
     }
 });
 exports.postDailyRevenue = postDailyRevenue;

@@ -67,19 +67,36 @@ export const deleteDailyRevenue = async (req: Request, res: Response) => {
 };
 
 export const postDailyRevenue = async (req: Request, res: Response) => {
-    const { body } = req;
+    const { title, date, closed, bank_holiday, total_sales, total_clients } = req.body;
 
     try {
-        await DailyRev.create(body);
+        const newRevenue = await DailyRev.create({
+            title,
+            date,
+            closed,
+            bank_holiday,
+            total_sales,
+            total_clients,
+            weekday_id: new Date(date).getDay(),
+        });
 
         res.json({
             msg: 'Daily Revenue has been added successfully',
-            body
+            data: newRevenue,
         });
     } catch (error) {
-        res.json({
-            msg: `Ups, try again. An error has occured.`
-        });
+        if (error instanceof Error) {
+            console.error('Error adding daily revenue:', error.message);
+            res.status(500).json({
+                msg: 'An error occurred while adding daily revenue',
+                error: error.message,
+            });
+        } else {
+            console.error('Unknown error:', error);
+            res.status(500).json({
+                msg: 'An unknown error occurred',
+            });
+        }
     }
 };
 
