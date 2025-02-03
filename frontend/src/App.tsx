@@ -8,22 +8,30 @@ import { Revenue } from './pages/overview-revenue';
 import { Footer } from './components/ui/footer';
 import { ScrollToTopButton } from './components/ui/button-scroll-up';
 import { RevenueLayout } from './layouts/revenue-layout';
+import { CompetitorsLayout } from './layouts/competitors-layout';
 
 function App() {
   return (
     <>
       <Header />
+
       <div className='bg-slate-200 flex flex-col min-h-screen'>
         <Routes>
           <Route path='/' element={<Home />} />
+          
           <Route element={<RevenueLayout />}>
             <Route path="/revenue" element={<Revenue />} />
             <Route path="/graphics" element={<Graphics />} />
           </Route>
+          
           <Route path='/calendar' element={<Calendar />} />
-          <Route path='/map' element={<Map />} />
+          
+          <Route element={<CompetitorsLayout />}>
+            <Route path='/map' element={<Map />} />
+          </Route>
         </Routes>
       </div>
+      
       <Footer />
       <ScrollToTopButton />
     </>

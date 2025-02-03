@@ -3,8 +3,8 @@ import { getCompetitors, getCompetitor } from './../controllers/competitors';
 
 const competitorRouter = Router();
 
-competitorRouter.get('/competitors', getCompetitors);
+competitorRouter.get('/', getCompetitors);
 
-competitorRouter.get('/competitors/:id', getCompetitor);
+competitorRouter.get('/:id', getCompetitor);
 
 export default competitorRouter;

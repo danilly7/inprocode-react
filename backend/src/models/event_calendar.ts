@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
-import db from '../db/connection';
+import { sequelize } from '../db/connection';
 
-const Event = db.define('event', {
+const Event = sequelize.define('event', {
     id_event: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -14,6 +14,7 @@ const Event = db.define('event', {
     date: {
         type: DataTypes.DATE,
         allowNull: false,
+        unique: true,
     },
     color: {
         type: DataTypes.STRING(7),

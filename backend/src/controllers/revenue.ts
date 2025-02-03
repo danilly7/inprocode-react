@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
-import DailyRev from '../models/daily_revenue';
+import models from '../models';
+
+const {DailyRev} = models;
 
 export const getRevenue = async (req: Request, res: Response) => {
     const { page = 1, limit = 10 } = req.query;

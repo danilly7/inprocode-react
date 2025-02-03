@@ -3,10 +3,10 @@ import { getEvents, getEvent, deleteEvent, postEvent, updateEvent } from './../c
 
 const calendarRouter = Router();
 
-calendarRouter.get('/events', getEvents);
-calendarRouter.get('/events/:id', getEvent);
-calendarRouter.delete('/events/:id', deleteEvent);
-calendarRouter.post('/events', postEvent);
-calendarRouter.put('/events/:id', updateEvent);
+calendarRouter.get('/', getEvents);
+calendarRouter.get('/:id', getEvent);
+calendarRouter.delete('/:id', deleteEvent);
+calendarRouter.post('/', postEvent);
+calendarRouter.put('/:id', updateEvent);
 
 export default calendarRouter;

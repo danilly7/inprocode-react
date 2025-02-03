@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
-import db from '../db/connection';
+import { sequelize } from '../db/connection';
 
-const DailyRev = db.define('daily_revenue', {
+const DailyRev = sequelize.define('daily_revenue', {
     id_dailyrev: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -10,10 +10,12 @@ const DailyRev = db.define('daily_revenue', {
     title: {
         type: DataTypes.STRING(30),
         allowNull: false,
+        unique: true,
     },
     date: {
         type: DataTypes.DATE,
         allowNull: true,
+        unique: true,
     },
     closed: {
         type: DataTypes.TINYINT,

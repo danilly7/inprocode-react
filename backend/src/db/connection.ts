@@ -9,9 +9,8 @@ const syncroModel = async () => {
   try {
     //sincroniza el modelo con la base de datos (crea la tabla si no existe)
     //con "alter: true" se sincronizan las columnas y se crean/eliminan si fuera necesario
-    await sequelize.sync({ force: false }).then(() => {
-      console.log('Modelos sincronizado con la base de datos');
-    });
+    await sequelize.sync({ force: true });
+    console.log('Modelos sincronizados con la base de datos');
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }
@@ -27,5 +26,4 @@ const testConnection = async () => {
   }
 };
 
-export default sequelize;
-testConnection();
+export { sequelize, testConnection, syncroModel };

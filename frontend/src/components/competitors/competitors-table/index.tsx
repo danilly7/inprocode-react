@@ -1,8 +1,23 @@
-import { competitors } from "../data";
+import { useCompetitorsContext } from "../../../context/competitors-context";
 
 export const CompetitorsTable: React.FC = () => {
+    const { competitor, loading, error } = useCompetitorsContext();
+
     return (
         <div className="overflow-x-auto mb-6">
+
+            {loading && (
+                <div className="p-4 bg-yellow-100 text-yellow-700 rounded-md mb-4">
+                    Loading competitors...
+                </div>
+            )}
+
+            {error && (
+                <div className="p-4 bg-red-100 text-red-700 rounded-md mb-4">
+                    Error loading competitors: {error.message}
+                </div>
+            )}
+
             <div className="hidden lg:block lg:mx-8 mt-6">
                 <table className="min-w-full table-auto bg-white shadow-md rounded-lg">
                     <thead className="bg-gray-100 text-gray-600 text-sm">
@@ -16,7 +31,7 @@ export const CompetitorsTable: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody className="text-sm text-gray-700">
-                        {competitors.map((competitor, index) => (
+                        {competitor.map((competitor, index) => (
                             <tr
                                 key={index}
                                 className={`border-b ${competitor.name === 'La Teca de l\'Àvia' ? 'bg-yellow-100' : ''}`}
@@ -34,7 +49,7 @@ export const CompetitorsTable: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-1 gap-6 sm:grid lg:hidden mt-6">
-                {competitors.map((competitor, index) => (
+                {competitor.map((competitor, index) => (
                     <div
                         key={index}
                         className={`bg-white border border-gray-200 shadow-md rounded-lg p-4 space-y-2 ${competitor.color}`}

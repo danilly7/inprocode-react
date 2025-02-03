@@ -13,20 +13,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getCompetitor = exports.getCompetitors = void 0;
-const competitors_1 = __importDefault(require("../models/competitors")); // Asegúrate de importar el modelo correctamente
+const competitors_1 = __importDefault(require("../models/competitors"));
 const getCompetitors = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { page = 1, limit = 10 } = req.query;
     try {
-        const result = yield competitors_1.default.findAndCountAll({
-            limit: Number(limit),
-            offset: (Number(page) - 1) * Number(limit),
-        });
-        res.json({
-            total: result.count,
-            pages: Math.ceil(result.count / Number(limit)),
-            currentPage: Number(page),
-            data: result.rows,
-        });
+        const result = yield competitors_1.default.findAndCountAll();
+        res.json({ data: result });
     }
     catch (error) {
         res.status(500).json({

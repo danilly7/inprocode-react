@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import { deleteDailyRevenue, getDailyRevenue, getRevenue, postDailyRevenue, updateDailyRevenue } from '../controllers/revenue';
 
-const router = Router();
+const revenueRouter = Router();
 
-router.get('/', getRevenue);
-router.get('/:id', getDailyRevenue);
-router.delete('/:id', deleteDailyRevenue);
-router.post('/', postDailyRevenue);
-router.put('/:id', updateDailyRevenue);
+revenueRouter.get('/', getRevenue);
+revenueRouter.get('/:id', getDailyRevenue);
+revenueRouter.delete('/:id', deleteDailyRevenue);
+revenueRouter.post('/', postDailyRevenue);
+revenueRouter.put('/:id', updateDailyRevenue);
 
-export default router;
+export default revenueRouter;

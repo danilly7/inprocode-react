@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
-import Event from '../models/event_calendar';
+import models from '../models';
+
+const {Event} = models;
 
 export const getEvents = async (req: Request, res: Response) => {
     const { page = 1, limit = 10 } = req.query;

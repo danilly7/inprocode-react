@@ -40,7 +40,7 @@ class Server {
             });
         });
         this.app.use('/api/revenue', revenue_1.default);
-        this.app.use('/api/calendar', calendar_1.default);
+        this.app.use('/api/events', calendar_1.default);
         this.app.use('/api/competitors', competitors_1.default);
     }
     middlewares() {

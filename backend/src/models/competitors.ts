@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
-import db from '../db/connection';
+import { sequelize } from '../db/connection';
 
-const Competitor = db.define('competitor', {
+const Competitor = sequelize.define('competitor', {
     id_competitor: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -10,6 +10,7 @@ const Competitor = db.define('competitor', {
     name: {
         type: DataTypes.STRING(255),
         allowNull: false,
+        unique: true, 
     },
     address: {
         type: DataTypes.STRING(255),
