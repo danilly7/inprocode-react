@@ -9,6 +9,8 @@ export const competitors: Competitor[] = [
     price: "€",
     hours: "Open every day except Sundays and Monday afternoons.",
     color: "bg-yellow-100",
+    latitude: 41.3964,
+    longitude: 2.1845,
   },
   {
     name: "El Xamfrà d’en Xifré",
@@ -18,6 +20,8 @@ export const competitors: Competitor[] = [
     price: "€",
     hours: "Open for lunch service on Thursdays, Fridays, and weekends. Closed on other days.",
     color: "bg-gray-100",
+    latitude: 41.4040,
+    longitude: 2.1796,
   },
   {
     name: "El Rey del Pollo",
@@ -27,6 +31,8 @@ export const competitors: Competitor[] = [
     price: "€",
     hours: "Open for lunch. Closed on Mondays.",
     color: "bg-gray-100",
+    latitude: 41.3969,
+    longitude: 2.1870,
   },
   {
     name: "La Cuina de la Carme",
@@ -36,6 +42,8 @@ export const competitors: Competitor[] = [
     price: "€",
     hours: "Open until 5 PM. Closed on Tuesdays.",
     color: "bg-gray-100",
+    latitude: 41.4082,
+    longitude: 2.1705,
   },
   {
     name: "El Ruedo restaurant",
@@ -45,6 +53,8 @@ export const competitors: Competitor[] = [
     price: "€€",
     hours: "Primarily open for dinner service in the evenings. Closed on Tuesdays.",
     color: "bg-gray-100",
+    latitude: 41.3961,
+    longitude: 2.1599,
   },
   {
     name: "Set de Llegums",
@@ -54,6 +64,8 @@ export const competitors: Competitor[] = [
     price: "€",
     hours: "Open Monday to Friday until 8:30 PM, and Saturdays until 2:30 PM. Closed on Sundays.",
     color: "bg-gray-100",
+    latitude: 41.4275,
+    longitude: 2.1790,
   },
   {
     name: "Xarcuteries Bosch",
@@ -63,6 +75,8 @@ export const competitors: Competitor[] = [
     price: "€€",
     hours: "Open until late from Monday to Saturday. Closed on Sundays.",
     color: "bg-gray-100",
+    latitude: 41.4069,
+    longitude: 2.1793,
   },
   {
     name: "Casa Tobella",
@@ -72,5 +86,7 @@ export const competitors: Competitor[] = [
     price: "€€",
     hours: "Open Monday to Friday. Fridays and Saturdays usually close a bit earlier, but open until 8:30 PM. Closed on Sundays.",
     color: "bg-gray-100",
+    latitude: 41.4072,
+    longitude: 2.1775,
   },
 ];

@@ -2,6 +2,8 @@ import express, { Application, Request, Response } from 'express';
 import routesRevenue from '../routes/revenue';
 import db from '../db/connection';
 import cors from 'cors';
+import calendarRouter from '../routes/calendar';
+import competitorRouter from '../routes/competitors';
 
 export class Server {
     private app: Application;
@@ -28,7 +30,9 @@ export class Server {
                 msg: 'API working'
             })
         })
-        this.app.use('/api/revenue', routesRevenue)
+        this.app.use('/api/revenue', routesRevenue);
+        this.app.use('/api/calendar', calendarRouter);
+        this.app.use('/api/competitors', competitorRouter);
     }
 
     middlewares() {

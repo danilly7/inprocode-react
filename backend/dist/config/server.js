@@ -17,6 +17,8 @@ const express_1 = __importDefault(require("express"));
 const revenue_1 = __importDefault(require("../routes/revenue"));
 const connection_1 = __importDefault(require("../db/connection"));
 const cors_1 = __importDefault(require("cors"));
+const calendar_1 = __importDefault(require("../routes/calendar"));
+const competitors_1 = __importDefault(require("../routes/competitors"));
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -38,6 +40,8 @@ class Server {
             });
         });
         this.app.use('/api/revenue', revenue_1.default);
+        this.app.use('/api/calendar', calendar_1.default);
+        this.app.use('/api/competitors', competitors_1.default);
     }
     middlewares() {
         this.app.use((0, cors_1.default)({})); //esto habilita el cors, cualquiera puede hacer solicitudes a la api ahora mismo
