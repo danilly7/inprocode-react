@@ -4,19 +4,12 @@ import models from '../models';
 const {Event} = models;
 
 export const getEvents = async (req: Request, res: Response) => {
-    const { page = 1, limit = 10 } = req.query;
-
     try {
-        const result = await Event.findAndCountAll({
-            limit: Number(limit),
-            offset: (Number(page) - 1) * Number(limit),
-        });
+        const result = await Event.findAll();
 
         res.json({
-            total: result.count,
-            pages: Math.ceil(result.count / Number(limit)),
-            currentPage: Number(page),
-            data: result.rows,
+            total: result.length,
+            data: result,
         });
     } catch (error) {
         res.status(500).json({
@@ -53,12 +46,12 @@ export const deleteEvent = async (req: Request, res: Response) => {
 
         if (!event) {
             res.status(404).json({
-                msg: `Event with id ${id} does NOT exist`
-            })
+                msg: `Event with id ${id} does NOT exist`,
+            });
         } else {
             await event.destroy();
             res.json({
-                msg: `Event has been deleted successfully`
+                msg: `Event has been deleted successfully`,
             });
         }
     } catch (error) {

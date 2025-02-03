@@ -14,7 +14,6 @@ const Event = sequelize.define('event', {
     date: {
         type: DataTypes.DATE,
         allowNull: false,
-        unique: true,
     },
     color: {
         type: DataTypes.STRING(7),
