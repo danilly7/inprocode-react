@@ -4,7 +4,7 @@ import { ListRevenue } from "../../components/revenue/crud/read-list";
 import { UpdateRevenueForm } from "../../components/revenue/crud/update-form";
 import { DailyRevenue } from "../../components/revenue/interface";
 
-export const Revenue = () => {
+const Revenue = () => {
     const [selectedRevenueForUpdate, setSelectedRevenueForUpdate] = useState<DailyRevenue | null>(null);
 
     const handleOpenUpdateForm = (revenue: DailyRevenue) => {
@@ -31,3 +31,5 @@ export const Revenue = () => {
         </div>
     );
 };
+
+export default Revenue;

@@ -1,7 +1,7 @@
 import { CompetitorsMap } from "../../components/competitors/competitors-map";
 import { CompetitorsTable } from "../../components/competitors/competitors-table";
 
-export const Map = () => {
+const Map = () => {
     return (
         <>
             <div className="p-8">
@@ -13,3 +13,5 @@ export const Map = () => {
         </>
     );
 };
+
+export default Map;

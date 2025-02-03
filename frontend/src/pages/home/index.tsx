@@ -1,7 +1,7 @@
 import { Carrousel } from "../../components/business/carrousel-img";
 import { InfoTeca } from "../../components/business/info";
 
-export const Home = () => {
+const Home = () => {
 
     return (
         <div className="p-8 flex flex-col items-center">
@@ -16,3 +16,5 @@ export const Home = () => {
         </div>
     )
 };
+
+export default Home;

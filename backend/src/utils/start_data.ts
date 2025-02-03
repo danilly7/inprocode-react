@@ -119,21 +119,21 @@ const insertInitialData = async () => {
   await Event.bulkCreate(holidayEventsData, { ignoreDuplicates: true });
 
   const dailyRevenueData = [
-    { title: 'Daily Revenue - 2024-12-01', date: '2024-12-01', total_sales: 617.55, total_clients: 163, closed: false, weekday_id: 1, bank_holiday: false },
-    { title: 'Daily Revenue - 2024-12-02', date: '2024-12-02', total_sales: 277.45, total_clients: 0, closed: false, weekday_id: 2, bank_holiday: false },
-    { title: 'Daily Revenue - 2024-12-03', date: '2024-12-03', total_sales: 545.95, total_clients: 58, closed: false, weekday_id: 3, bank_holiday: false },
-    { title: 'Daily Revenue - 2024-12-04', date: '2024-12-04', total_sales: 0, total_clients: 33, closed: true, weekday_id: 4, bank_holiday: false },
-    { title: 'Daily Revenue - 2024-12-05', date: '2024-12-05', total_sales: 635.45, total_clients: 87, closed: false, weekday_id: 5, bank_holiday: false },
-    { title: 'Daily Revenue - 2024-12-06', date: '2024-12-06', total_sales: 476.65, total_clients: 92, closed: false, weekday_id: 6, bank_holiday: true },
-    { title: 'Daily Revenue - 2024-12-07', date: '2024-12-07', total_sales: 411.70, total_clients: 81, closed: true, weekday_id: 7, bank_holiday: false },
-    { title: 'Daily Revenue - 2024-12-08', date: '2024-12-08', total_sales: 510.15, total_clients: 152, closed: false, weekday_id: 1, bank_holiday: true },
-    { title: 'Daily Revenue - 2024-12-09', date: '2024-12-09', total_sales: 0, total_clients: 0, closed: false, weekday_id: 2, bank_holiday: false },
-    { title: 'Daily Revenue - 2024-12-10', date: '2024-12-10', total_sales: 794.17, total_clients: 63, closed: false, weekday_id: 3, bank_holiday: false },
-    { title: 'Daily Revenue - 2024-12-11', date: '2024-12-11', total_sales: 701.10, total_clients: 46, closed: false, weekday_id: 4, bank_holiday: false },
-    { title: 'Daily Revenue - 2024-12-12', date: '2024-12-12', total_sales: 713.36, total_clients: 65, closed: false, weekday_id: 5, bank_holiday: false },
-    { title: 'Daily Revenue - 2024-12-13', date: '2024-12-13', total_sales: 744.04, total_clients: 59, closed: false, weekday_id: 6, bank_holiday: false },
-    { title: 'Daily Revenue - 2024-12-14', date: '2024-12-14', total_sales: 1562.96, total_clients: 86, closed: true, weekday_id: 7, bank_holiday: false },
-    { title: 'Daily Revenue - 2024-12-15', date: '2024-12-15', total_sales: 2255.43, total_clients: 151, closed: false, weekday_id: 1, bank_holiday: false },
+    { title: 'Daily Revenue - 2024-12-01', date: '2024-12-01', total_sales: 617.55, total_clients: 163, closed: false, weekday_id: 7, bank_holiday: false },
+    { title: 'Daily Revenue - 2024-12-02', date: '2024-12-02', total_sales: 277.45, total_clients: 0, closed: false, weekday_id: 1, bank_holiday: false },
+    { title: 'Daily Revenue - 2024-12-03', date: '2024-12-03', total_sales: 545.95, total_clients: 58, closed: false, weekday_id: 2, bank_holiday: false },
+    { title: 'Daily Revenue - 2024-12-04', date: '2024-12-04', total_sales: 0, total_clients: 33, closed: true, weekday_id: 3, bank_holiday: false },
+    { title: 'Daily Revenue - 2024-12-05', date: '2024-12-05', total_sales: 635.45, total_clients: 87, closed: false, weekday_id: 4, bank_holiday: false },
+    { title: 'Daily Revenue - 2024-12-06', date: '2024-12-06', total_sales: 476.65, total_clients: 92, closed: false, weekday_id: 5, bank_holiday: true },
+    { title: 'Daily Revenue - 2024-12-07', date: '2024-12-07', total_sales: 411.70, total_clients: 81, closed: true, weekday_id: 6, bank_holiday: false },
+    { title: 'Daily Revenue - 2024-12-08', date: '2024-12-08', total_sales: 510.15, total_clients: 152, closed: false, weekday_id: 7, bank_holiday: true },
+    { title: 'Daily Revenue - 2024-12-09', date: '2024-12-09', total_sales: 0, total_clients: 0, closed: false, weekday_id: 1, bank_holiday: false },
+    { title: 'Daily Revenue - 2024-12-10', date: '2024-12-10', total_sales: 794.17, total_clients: 63, closed: false, weekday_id: 2, bank_holiday: false },
+    { title: 'Daily Revenue - 2024-12-11', date: '2024-12-11', total_sales: 701.10, total_clients: 46, closed: false, weekday_id: 3, bank_holiday: false },
+    { title: 'Daily Revenue - 2024-12-12', date: '2024-12-12', total_sales: 713.36, total_clients: 65, closed: false, weekday_id: 4, bank_holiday: false },
+    { title: 'Daily Revenue - 2024-12-13', date: '2024-12-13', total_sales: 744.04, total_clients: 59, closed: false, weekday_id: 5, bank_holiday: false },
+    { title: 'Daily Revenue - 2024-12-14', date: '2024-12-14', total_sales: 1562.96, total_clients: 86, closed: true, weekday_id: 6, bank_holiday: false },
+    { title: 'Daily Revenue - 2024-12-15', date: '2024-12-15', total_sales: 2255.43, total_clients: 151, closed: false, weekday_id: 7, bank_holiday: false },
   ];
 
   await DailyRev.bulkCreate(dailyRevenueData, {ignoreDuplicates:true});

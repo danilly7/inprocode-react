@@ -13,6 +13,10 @@ export const ListRevenue: React.FC<ListRevenueProps> = ({ onEdit }) => {
     const [selectedRevenue, setSelectedRevenue] = useState<DailyRevenue | null>(null);
     const [sortConfig, setSortConfig] = useState<{ key: keyof DailyRevenue; direction: "asc" | "desc" } | null>(null);
 
+    const formatDate = (dateString: string) => {
+        return new Date(dateString).toISOString().split('T')[0];
+    };
+
     const uniqueRevenue = dayrev
         .map(dayrevenue => ({
             ...dayrevenue,
@@ -70,7 +74,7 @@ export const ListRevenue: React.FC<ListRevenueProps> = ({ onEdit }) => {
                             }`}
                     >
                         <h4 className="font-semibold text-lg">{dayrevenue.title}</h4>
-                        <p>Date: {dayrevenue.date}</p>
+                        <p>Date: {formatDate(dayrevenue.date)}</p>
                         <p>Weekday: {weekdays[dayrevenue.weekday_id - 1]}</p>
                         <p>Total Sales: {dayrevenue.total_sales.toFixed(2)} €</p>
                         <p>Total Clients: {dayrevenue.total_clients} pax</p>
@@ -111,7 +115,7 @@ export const ListRevenue: React.FC<ListRevenueProps> = ({ onEdit }) => {
                         {sortedRevenue.map((dayrevenue) => (
                             <tr key={dayrevenue.id_dailyrev} className={`bg-white ${dayrevenue.bank_holiday ? "bg-yellow-100" : dayrevenue.closed ? "bg-gray-200" : ""}`}>
                                 <td className="border border-gray-300 p-2">{dayrevenue.title}</td>
-                                <td className="border border-gray-300 p-2">{dayrevenue.date}</td>
+                                <td className="border border-gray-300 p-2">{formatDate(dayrevenue.date)}</td>
                                 <td className="border border-gray-300 p-2">{dayrevenue.closed ? "Closed" : ""}</td>
                                 <td className="border border-gray-300 p-2">{weekdays[dayrevenue.weekday_id - 1]}</td>
                                 <td className="border border-gray-300 p-2">{dayrevenue.bank_holiday ? "Bank Holiday" : ""}</td>
