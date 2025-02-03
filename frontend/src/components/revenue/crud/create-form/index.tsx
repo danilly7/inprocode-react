@@ -121,22 +121,29 @@ export const AddRevenueForm = () => {
                     <label className="block text-gray-600 font-medium mb-2">Total Sales (€)</label>
                     <input
                         type="number"
-                        value={totalSales}
-                        onChange={(e) => setTotalSales(Number(e.target.value))}
+                        step="0.01"
+                        value={totalSales === 0 ? "" : totalSales}
+                        onChange={(e) => {
+                            const inputValue = e.target.value;
+                            setTotalSales(inputValue === "" ? 0 : parseFloat(inputValue));
+                        }}
                         className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                         required
-                        min={0}
+                        min="0"
                     />
                 </div>
                 <div className="mb-6">
                     <label className="block text-gray-600 font-medium mb-2">Total Clients</label>
                     <input
                         type="number"
-                        value={totalClients}
-                        onChange={(e) => setTotalClients(Number(e.target.value))}
+                        value={totalClients === 0 ? "" : totalClients}
+                        onChange={(e) => {
+                            const inputValue = e.target.value;
+                            setTotalClients(inputValue === "" ? 0 : parseInt(inputValue));
+                        }}
                         className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                         required
-                        min={0}
+                        min="0"
                     />
                 </div>
                 <button

@@ -2,13 +2,18 @@ import { useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import { holidayEvents } from '../../components/calendar/data';
+
+interface CalendarEvent {
+    title: string;
+    date: string;
+    color: string;
+}
 
 export const Calendar = () => {
-    const [events, setEvents] = useState([
-        { title: 'Event 1', date: '2025-02-01' },
-        { title: 'Event 2', date: '2025-02-10' },
-        { title: 'Event 3', date: '2025-02-15' },
-    ]);
+    const [events, setEvents] = useState<CalendarEvent[]>(holidayEvents);
+
+    const isHoliday = (date: string) => holidayEvents.some(event => event.date === date);
 
     //tengo problemas con la actualización del fullCalendar, no encuentro DateClickArg en su biblio y typescript necesita tipado, por eso se crean estas minifunciones -------↓
     const isDateClickArg = (info: unknown): info is { dateStr: string } => {
@@ -27,8 +32,9 @@ export const Calendar = () => {
                 const newEvent = {
                     title,
                     date: info.dateStr,
+                    color: '#1e88e5',
                 };
-                setEvents([...events, newEvent]);
+                setEvents(prevEvents => [...prevEvents, newEvent]);
             }
         }
     };
@@ -38,11 +44,16 @@ export const Calendar = () => {
             const shouldDelete = window.confirm(`Do you want to eliminate: "${info.event.title}"?`);
             if (shouldDelete) {
                 info.event.remove();
-                setEvents(events.filter((event) => event.title !== info.event.title));
+                setEvents(prevEvents => prevEvents.filter(event => event.title !== info.event.title));
             } else {
                 const newTitle = prompt('Edit title of this event:', info.event.title);
                 if (newTitle) {
                     info.event.setProp('title', newTitle);
+                    setEvents(prevEvents =>
+                        prevEvents.map(event =>
+                            event.title === info.event.title ? { ...event, title: newTitle } : event
+                        )
+                    );
                 }
             }
         }
@@ -54,7 +65,10 @@ export const Calendar = () => {
             <FullCalendar
                 plugins={[dayGridPlugin, interactionPlugin]}
                 initialView="dayGridMonth"
-                events={events}
+                events={events.map(event => ({
+                    ...event,
+                    color: isHoliday(event.date) ? '#fbc02d' : event.color,
+                }))}
                 headerToolbar={{
                     left: 'dayGridMonth',
                     center: 'title',
