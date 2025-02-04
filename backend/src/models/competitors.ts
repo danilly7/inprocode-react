@@ -37,11 +37,11 @@ const Competitor = sequelize.define('competitor', {
         allowNull: true,
     },
     latitude: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.DECIMAL(10, 8),
         allowNull: false,
     },
     longitude: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.DECIMAL(11, 8),
         allowNull: false,
     },
 }, {

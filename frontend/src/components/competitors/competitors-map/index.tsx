@@ -18,9 +18,16 @@ const CompetitorsMap = () => {
     const { competitor, loading, error } = useCompetitorsContext();
     const [selectedCompetitor, setSelectedCompetitor] = useState<Competitor | null>(null);
 
-    const uniqueCompetitors = competitor.filter((value, index, self) =>
-        index === self.findIndex((c) => c.id_competitor === value.id_competitor)
-    );
+    const validCompetitors = Array.from(new Set(competitor.map((c) => c.id_competitor)))
+    .map((id) => competitor.find((c) => c.id_competitor === id))
+    .filter((c) => c !== undefined) // Filtra los `undefined`
+    .filter((c) => {
+        const lat = parseFloat(c.latitude);
+        const lng = parseFloat(c.longitude);
+        return !isNaN(lat) && !isNaN(lng);
+    });
+
+    console.log("Valid Competitors:", validCompetitors);
 
     return (
         <>
@@ -33,32 +40,26 @@ const CompetitorsMap = () => {
             {error && (
                 <div className="error-message">Error: {error.message}</div>
             )}
+
             {!loading && !error && (
                 <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
-                    <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={17}>
-                        {uniqueCompetitors.map((competitor) => {
-
-                            const lat = parseFloat(competitor.latitude);
-                            const lng = parseFloat(competitor.longitude);
-
-                            if (isNaN(lat) || isNaN(lng)) {
-                                return null;
-                            }
-
-                            return (
-                                <Marker
-                                    key={competitor.id_competitor}
-                                    position={{ lat, lng }}
-                                    onClick={() => setSelectedCompetitor(competitor)}
-                                />
-                            );
-                        })}
+                    <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={16}>
+                        {validCompetitors.map((competitor) => (
+                            <Marker
+                                key={competitor.id_competitor}
+                                position={{
+                                    lat: parseFloat(competitor.latitude),
+                                    lng: parseFloat(competitor.longitude),
+                                }}
+                                onClick={() => setSelectedCompetitor(competitor)}
+                            />
+                        ))}
 
                         {selectedCompetitor && (
                             <InfoWindow
                                 position={{
                                     lat: parseFloat(selectedCompetitor.latitude),
-                                    lng: parseFloat(selectedCompetitor.longitude)
+                                    lng: parseFloat(selectedCompetitor.longitude),
                                 }}
                                 onCloseClick={() => setSelectedCompetitor(null)}
                             >

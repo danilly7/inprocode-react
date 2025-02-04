@@ -12,8 +12,8 @@ const insertInitialData = async () => {
       "price": "€",
       "hours": "Open every day except Sundays and Monday afternoons.",
       "color": "bg-yellow-100",
-      "latitude": 41.41124784241824, 
-      "longitude": 2.1829556960885315
+      "latitude": 41.410932953977984, 
+      "longitude": 2.1829122818595765
     },
     {
       "name": "El Xamfrà d’en Xifré",
@@ -23,8 +23,8 @@ const insertInitialData = async () => {
       "price": "€",
       "hours": "Open for lunch service on Thursdays, Fridays, and weekends. Closed on other days.",
       "color": "bg-gray-100",
-      "latitude": 41.40923360500248, 
-      "longitude": 2.183195253759728
+      "latitude": 41.40927600349386, 
+      "longitude": 2.1832211583757934 
     },
     {
       "name": "El Rey del Pollo",
@@ -34,8 +34,8 @@ const insertInitialData = async () => {
       "price": "€",
       "hours": "Open for lunch. Closed on Mondays.",
       "color": "bg-gray-100",
-      "latitude": 41.411991276309145, 
-      "longitude": 2.1843220230747655
+      "latitude": 41.41217196488872, 
+      "longitude":  2.1843037791072235
     },
     {
       "name": "La Cuina de la Carme",
@@ -45,8 +45,8 @@ const insertInitialData = async () => {
       "price": "€",
       "hours": "Open until 5 PM. Closed on Tuesdays.",
       "color": "bg-gray-100",
-      "latitude": 41.41186791583471, 
-      "longitude": 2.185436524924215
+      "latitude": 41.411820126001196, 
+      "longitude": 2.1853142251232245
     },
     {
       "name": "El Ruedo restaurant",
@@ -56,8 +56,8 @@ const insertInitialData = async () => {
       "price": "€€",
       "hours": "Primarily open for dinner service in the evenings. Closed on Tuesdays.",
       "color": "bg-gray-100",
-      "latitude": 41.411269470454876, 
-      "longitude": 2.1812126537598426
+      "latitude": 41.41119763714744, 
+      "longitude": 2.1813085284169342
     },
     {
       "name": "Set de Llegums",
@@ -67,8 +67,8 @@ const insertInitialData = async () => {
       "price": "€",
       "hours": "Open Monday to Friday until 8:30 PM, and Saturdays until 2:30 PM. Closed on Sundays.",
       "color": "bg-gray-100",
-      "latitude": 41.4121340998865, 
-      "longitude": 2.1815974384173065
+      "latitude": 41.41180659369822, 
+      "longitude": 2.1815070088843633
     },
     {
       "name": "Xarcuteries Bosch",
@@ -78,8 +78,8 @@ const insertInitialData = async () => {
       "price": "€€",
       "hours": "Open until late from Monday to Saturday. Closed on Sundays.",
       "color": "bg-gray-100",
-      "latitude": 41.4097614396801, 
-      "longitude": 2.1832531230746075
+      "latitude": 41.40970905265875, 
+      "longitude": 2.1832211583757934
     },
     {
       "name": "Casa Tobella",
@@ -89,8 +89,8 @@ const insertInitialData = async () => {
       "price": "€€",
       "hours": "Open Monday to Friday. Fridays and Saturdays usually close a bit earlier, but open until 8:30 PM. Closed on Sundays.",
       "color": "bg-gray-100",
-      "latitude": 41.40767015576458, 
-      "longitude": 2.18258299423889
+      "latitude": 41.40769264284521, 
+      "longitude": 2.182571585990707 
     },
   ];
 
