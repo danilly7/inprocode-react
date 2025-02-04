@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Competitor } from "../interface";
 import { GoogleMap, Marker, LoadScript, InfoWindow } from "@react-google-maps/api";
 import { useCompetitorsContext } from "../../../context/competitors-context";
+import Spinner from '../../ui/spinner'
 
 const containerStyle = {
     width: '100%',
@@ -13,7 +14,7 @@ const center = {
     lng: 2.182923509581615,
 };
 
-export const CompetitorsMap = () => {
+const CompetitorsMap = () => {
     const { competitor, loading, error } = useCompetitorsContext();
     const [selectedCompetitor, setSelectedCompetitor] = useState<Competitor | null>(null);
 
@@ -24,12 +25,14 @@ export const CompetitorsMap = () => {
     return (
         <>
             {loading && (
-                <div className="loading-message">Loading competitors...</div>
+                <div className="flex items-center justify-center h-96">
+                    <Spinner />
+                </div>
             )}
 
             {error && (
                 <div className="error-message">Error: {error.message}</div>
-            )} 
+            )}
             {!loading && !error && (
                 <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
                     <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={17}>
@@ -46,7 +49,7 @@ export const CompetitorsMap = () => {
                                 <Marker
                                     key={competitor.id_competitor}
                                     position={{ lat, lng }}
-                                    onClick={() => setSelectedCompetitor(competitor)} 
+                                    onClick={() => setSelectedCompetitor(competitor)}
                                 />
                             );
                         })}
@@ -71,3 +74,5 @@ export const CompetitorsMap = () => {
         </>
     );
 };
+
+export default CompetitorsMap;
