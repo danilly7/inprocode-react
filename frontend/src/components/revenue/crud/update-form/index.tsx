@@ -1,25 +1,25 @@
 import { useState, useEffect } from "react";
-import { useRevenueContext } from "../../../../context/revenue-context";
 import { DailyRevenue } from "../../interface";
+import { formatDate } from "../../../../utils/date-format";
+import { ModalUpdateRevenue } from "../update-modal";
 
 interface UpdateRevenueFormProps {
     revenue: DailyRevenue;
+    onSubmit: (id: number, updatedRevenue: Omit<DailyRevenue, "id_dailyrev">) => void;
     onClose: () => void;
 }
 
-export const UpdateRevenueForm = ({ revenue, onClose }: UpdateRevenueFormProps) => {
-    const { updateRevenue, refreshRevenue } = useRevenueContext();
+export const UpdateRevenueForm = ({ revenue, onSubmit, onClose }: UpdateRevenueFormProps) => {
     const [title, setTitle] = useState(revenue.title);
-    const [date, setDate] = useState(revenue.date);
     const [closed, setClosed] = useState(revenue.closed);
     const [bankHoliday, setBankHoliday] = useState(revenue.bank_holiday);
-    const [totalSales, setTotalSales] = useState(revenue.total_sales);
-    const [totalClients, setTotalClients] = useState(revenue.total_clients);
+    const [totalSales, setTotalSales] = useState<number | "">(revenue.total_sales || "");
+    const [totalClients, setTotalClients] = useState<number | "">(revenue.total_clients || "");
     const [weekdayId, setWeekdayId] = useState(revenue.weekday_id);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         setTitle(revenue.title);
-        setDate(revenue.date);
         setClosed(revenue.closed);
         setBankHoliday(revenue.bank_holiday);
         setTotalSales(revenue.total_sales);
@@ -32,23 +32,21 @@ export const UpdateRevenueForm = ({ revenue, onClose }: UpdateRevenueFormProps) 
 
         const updatedRevenue = {
             title,
-            date,
+            date: revenue.date,
             closed,
             bank_holiday: bankHoliday,
-            total_sales: totalSales,
-            total_clients: totalClients,
+            total_sales: totalSales === "" ? 0 : Number(totalSales),
+            total_clients: totalClients === "" ? 0 : Number(totalClients),
             weekday_id: weekdayId,
         };
 
-        try {
-            await updateRevenue(revenue.id_dailyrev, updatedRevenue);
-            onClose();
-            setTimeout(() => {
-                refreshRevenue();
-            }, 300); 
-        } catch (error) {
-            console.error("Error updating revenue:", error);
-        }
+        await onSubmit(revenue.id_dailyrev, updatedRevenue);
+        setShowModal(true);
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+        onClose();
     };
 
     return (
@@ -70,13 +68,9 @@ export const UpdateRevenueForm = ({ revenue, onClose }: UpdateRevenueFormProps) 
                 </div>
                 <div className="mb-4">
                     <label className="block text-gray-600 font-medium mb-2">Date</label>
-                    <input
-                        type="date"
-                        value={date}
-                        onChange={(e) => setDate(e.target.value)}
-                        className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                        required
-                    />
+                    <p className="w-full p-3 border border-gray-300 rounded-md bg-gray-100 text-gray-600">
+                        {formatDate(revenue.date)}
+                    </p>
                 </div>
                 <div className="mb-4 flex items-center">
                     <label className="block text-gray-600 font-medium mr-4">Closed</label>
@@ -119,19 +113,20 @@ export const UpdateRevenueForm = ({ revenue, onClose }: UpdateRevenueFormProps) 
                 <div className="flex justify-between">
                     <button
                         type="submit"
-                        className="bg-green-500 text-white p-3 rounded-md font-semibold hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="w-1/2 bg-green-500 text-white p-3 rounded-md font-semibold hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 mr-2"
                     >
                         Update Revenue
                     </button>
                     <button
                         type="button"
                         onClick={onClose}
-                        className="bg-gray-500 text-white p-3 rounded-md font-semibold hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                        className="w-1/2 bg-gray-400 text-white p-3 rounded-md font-semibold hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400"
                     >
-                        Cancel
+                        Cancel Update
                     </button>
                 </div>
             </form>
+            {showModal && <ModalUpdateRevenue closeModal={closeModal} />}
         </div>
     );
 };

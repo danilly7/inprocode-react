@@ -1,30 +1,45 @@
 import { useState } from 'react';
-import { useRevenueContext } from '../../../../context/revenue-context';
 import { ModalAddRevenue } from '../create-modal';
+import { DailyRevenue } from '../../interface';
+import { useRevenueContext } from '../../../../context/revenue-context';
 
-export const AddRevenueForm = () => {
-    const { createRevenue } = useRevenueContext();
+interface AddRevenueFormProps {
+    onSuccess: (newRevenue: Omit<DailyRevenue, "id_dailyrev">) => Promise<void>;
+}
+
+export const AddRevenueForm: React.FC<AddRevenueFormProps> = ({ onSuccess }) => {
     const [title, setTitle] = useState('');
     const [date, setDate] = useState('');
     const [closed, setClosed] = useState(false);
     const [bankHoliday, setBankHoliday] = useState(false);
-    const [totalSales, setTotalSales] = useState(0);
-    const [totalClients, setTotalClients] = useState(0);
+    const [totalSales, setTotalSales] = useState<number | "">("");
+    const [totalClients, setTotalClients] = useState<number | "">("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [weekdayId, setWeekdayId] = useState<number | null>(null);
+    const [weekdayId, setWeekdayId] = useState<number>(0);
     const [showModal, setShowModal] = useState(false);
-
+    
+    const {dayrev} = useRevenueContext();
+   
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (totalSales < 0 || totalClients < 0) {
-            setError('Total Sales and Total Clients cannot be negative.');
+        const existingEntry = dayrev.find((revenue) => revenue.date === date);
+        if (existingEntry) {
+            setError('Ya existe una entrada para esta fecha.');
             return;
         }
 
-        if (weekdayId === null) {
-            setError('Invalid date selected. Please select a valid date.');
+        const parsedSales = parseFloat(totalSales as string);
+        const parsedClients = parseInt(totalClients as string);
+
+        if (isNaN(parsedSales) || isNaN(parsedClients)) {
+            setError('Total Sales and Total Clients must be valid numbers.');
+            return;
+        }
+
+        if (parsedSales < 0 || parsedClients < 0) {
+            setError('Total Sales and Total Clients cannot be negative.');
             return;
         }
 
@@ -33,8 +48,8 @@ export const AddRevenueForm = () => {
             date,
             closed,
             bank_holiday: bankHoliday,
-            total_sales: totalSales,
-            total_clients: totalClients,
+            total_sales: parsedSales,
+            total_clients: parsedClients,
             weekday_id: weekdayId,
         };
 
@@ -42,7 +57,7 @@ export const AddRevenueForm = () => {
         setError(null);
 
         try {
-            await createRevenue(newRevenue);
+            await onSuccess(newRevenue);
             setShowModal(true);
             setTitle('');
             setDate('');
@@ -50,7 +65,7 @@ export const AddRevenueForm = () => {
             setBankHoliday(false);
             setTotalSales(0);
             setTotalClients(0);
-            setWeekdayId(null);
+            setWeekdayId(0);
         } catch (error) {
             setError('Error adding revenue');
             console.error('Error adding revenue:', error);
@@ -122,10 +137,10 @@ export const AddRevenueForm = () => {
                     <input
                         type="number"
                         step="0.01"
-                        value={totalSales === 0 ? "" : totalSales}
+                        value={totalSales !== "" ? totalSales : ""}
                         onChange={(e) => {
                             const inputValue = e.target.value;
-                            setTotalSales(inputValue === "" ? 0 : parseFloat(inputValue));
+                            setTotalSales(inputValue === "" ? "" : parseFloat(inputValue));
                         }}
                         className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                         required
@@ -136,10 +151,10 @@ export const AddRevenueForm = () => {
                     <label className="block text-gray-600 font-medium mb-2">Total Clients</label>
                     <input
                         type="number"
-                        value={totalClients === 0 ? "" : totalClients}
+                        value={totalClients !== "" ? totalClients : ""}
                         onChange={(e) => {
                             const inputValue = e.target.value;
-                            setTotalClients(inputValue === "" ? 0 : parseInt(inputValue));
+                            setTotalClients(inputValue === "" ? "" : parseInt(inputValue));
                         }}
                         className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                         required

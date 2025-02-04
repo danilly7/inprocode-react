@@ -3,6 +3,7 @@ import { useRevenueContext } from "../../../../context/revenue-context";
 import { weekdays } from "../../data";
 import { ModalDelete } from "../delete-modal";
 import { DailyRevenue } from "../../interface";
+import { formatDate } from "../../../../utils/date-format";
 
 interface ListRevenueProps {
     onEdit: (revenue: DailyRevenue) => void;
@@ -12,10 +13,6 @@ export const ListRevenue: React.FC<ListRevenueProps> = ({ onEdit }) => {
     const { dayrev, loading, error, loadMore, hasMore, deleteRevenue } = useRevenueContext();
     const [selectedRevenue, setSelectedRevenue] = useState<DailyRevenue | null>(null);
     const [sortConfig, setSortConfig] = useState<{ key: keyof DailyRevenue; direction: "asc" | "desc" } | null>(null);
-
-    const formatDate = (dateString: string) => {
-        return new Date(dateString).toISOString().split('T')[0];
-    };
 
     const uniqueRevenue = dayrev
         .map(dayrevenue => ({

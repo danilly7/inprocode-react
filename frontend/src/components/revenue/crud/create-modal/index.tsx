@@ -2,10 +2,10 @@ import React from "react";
 
 interface ModalAddRevenueProps {
     closeModal: () => void;
-    onCloseForm: () => void;
+    onCloseForm?: () => void;
 }
 
-export const ModalAddRevenue: React.FC<ModalAddRevenueProps> = ({ closeModal, onCloseForm }) => {
+export const ModalAddRevenue: React.FC<ModalAddRevenueProps> = ({ closeModal }) => {
     const handleClose = (e: React.MouseEvent) => {
         if (e.target === e.currentTarget) {
             closeModal();
@@ -36,7 +36,6 @@ export const ModalAddRevenue: React.FC<ModalAddRevenueProps> = ({ closeModal, on
                         className="bg-green-500 text-white px-4 py-2 rounded"
                         onClick={() => {
                             closeModal();
-                            onCloseForm();
                         }}
                     >
                         Add Another

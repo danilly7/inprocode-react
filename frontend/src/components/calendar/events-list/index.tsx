@@ -1,12 +1,9 @@
 import { useMemo } from "react";
 import { useCalendarContext } from "../../../context/calendar-context";
+import { formatDate } from "../../../utils/date-format";
 
 export const EventsList = () => {
     const { event } = useCalendarContext();
-
-    const formatDate = (dateString: string) => {
-        return new Date(dateString).toISOString().split('T')[0];
-    };
 
     const upcomingEvents = useMemo(() => {
         const today = new Date();

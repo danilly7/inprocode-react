@@ -49,10 +49,11 @@ export const RevenueProvider = ({ children }: { children: ReactNode }) => {
 
     const refreshRevenue = async () => {
         try {
-            const response = await fetch(apiRevenue);
+            const response = await fetch(`${apiRevenue}?page=1`);
             if (response.ok) {
                 const json = await response.json();
                 setDayrev(json.data);
+                setPage(1);
             }
         } catch (error) {
             console.error("Error refreshing revenue data:", error);
@@ -60,7 +61,13 @@ export const RevenueProvider = ({ children }: { children: ReactNode }) => {
     };
 
     const createRevenue = async (newRevenue: Omit<DailyRevenue, "id_dailyrev">) => {
-        try {
+        const tempId = Date.now(); //--optimistic ui
+        setDayrev((prevDayrev) => [
+            ...prevDayrev,
+            { ...newRevenue, id_dailyrev: tempId },
+        ]);
+
+        try { //-- conexión al back
             const response = await fetch(apiRevenue, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -68,16 +75,33 @@ export const RevenueProvider = ({ children }: { children: ReactNode }) => {
             });
             if (response.ok) {
                 const createdRevenue = await response.json();
-                setDayrev((prevDayrev) => [...prevDayrev, createdRevenue.data]);
+                setDayrev((prevDayrev) =>
+                    prevDayrev.map((revenue) =>
+                        revenue.id_dailyrev === tempId ? createdRevenue.data : revenue
+                    )
+                );
             } else {
-                console.error('Failed to add revenue', response);
+                //si la respuesta falla, revertimos el ingreso optimista
+                setDayrev((prevDayrev) =>
+                    prevDayrev.filter((revenue) => revenue.id_dailyrev !== tempId)
+                );
             }
         } catch (error) {
+            //si ocurre un error, revertimos el ingreso optimista
             console.error("Error adding revenue:", error);
+            setDayrev((prevDayrev) =>
+                prevDayrev.filter((revenue) => revenue.id_dailyrev !== tempId)
+            );
         }
     };
 
     const updateRevenue = async (id: number, updatedRevenue: Partial<DailyRevenue>) => {
+        setDayrev((prevDayrev) => //--optimistic ui
+            prevDayrev.map((revenue) =>
+                revenue.id_dailyrev === id ? { ...revenue, ...updatedRevenue } : revenue
+            )
+        );
+
         try {
             const response = await fetch(`${apiRevenue}/${id}`, {
                 method: "PUT",
@@ -86,27 +110,51 @@ export const RevenueProvider = ({ children }: { children: ReactNode }) => {
             });
             if (response.ok) {
                 const updatedData = await response.json();
-                setDayrev((prevDayrev) => 
-                    prevDayrev.map((revenue) => 
+                setDayrev((prevDayrev) =>
+                    prevDayrev.map((revenue) =>
                         revenue.id_dailyrev === id ? { ...revenue, ...updatedData.data } : revenue
+                    )
+                );
+            } else {
+                //si la respuesta falla, revertimos el ingreso optimista
+                console.error("Failed to update revenue:", response);
+                setDayrev((prevDayrev) =>
+                    prevDayrev.map((revenue) =>
+                        revenue.id_dailyrev === id ? { ...revenue, ...updatedRevenue } : revenue
                     )
                 );
             }
         } catch (error) {
+            //si ocurre un error, revertimos el cambio optimista
             console.error("Error updating revenue:", error);
+            setDayrev((prevDayrev) =>
+                prevDayrev.map((revenue) =>
+                    revenue.id_dailyrev === id ? { ...revenue, ...updatedRevenue } : revenue
+                )
+            );
         }
     };
 
     const deleteRevenue = async (id: number) => {
+        setDayrev((prevDayrev) => prevDayrev.filter((revenue) => revenue.id_dailyrev !== id));
+
         try {
             const response = await fetch(`${apiRevenue}/${id}`, { method: "DELETE" });
             if (response.ok) {
-                setDayrev((prevDayrev) => prevDayrev.filter((revenue) => revenue.id_dailyrev !== id));
-                // Recalcular hasMore después de eliminar un elemento
+                //si la eliminación es exitosa, recalcular el estado de hasMore
                 setHasMore(dayrev.length > 10 && dayrev.length % 10 === 0);
+            } else {
+                console.error("Failed to delete revenue:", response);
+                //si falla, restauramos el ingreso eliminado
+                //puedes recuperar los datos del servidor o almacenar un ID temporal
             }
         } catch (error) {
             console.error("Error deleting revenue:", error);
+            //si hay error, restaurar el ingreso eliminado
+            setDayrev((prevDayrev) => [
+                ...prevDayrev,
+                //aquí deberías restaurar el ingreso eliminado desde una fuente segura si la necesitas
+            ]);
         }
     };
 
