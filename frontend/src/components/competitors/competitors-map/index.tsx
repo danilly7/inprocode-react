@@ -20,14 +20,12 @@ const CompetitorsMap = () => {
 
     const validCompetitors = Array.from(new Set(competitor.map((c) => c.id_competitor)))
     .map((id) => competitor.find((c) => c.id_competitor === id))
-    .filter((c) => c !== undefined) // Filtra los `undefined`
+    .filter((c) => c !== undefined)
     .filter((c) => {
         const lat = parseFloat(c.latitude);
         const lng = parseFloat(c.longitude);
         return !isNaN(lat) && !isNaN(lng);
     });
-
-    console.log("Valid Competitors:", validCompetitors);
 
     return (
         <>

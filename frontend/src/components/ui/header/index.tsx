@@ -43,7 +43,7 @@ export const Header = () => {
                     </li>
                     <li>
                         <NavLink
-                            to='/revenue'
+                            to='/revenue/overview'
                             className={({ isActive }) => isActive ? 'font-semibold pointer-events-none' : undefined}
                         >
                             Revenue
@@ -51,7 +51,7 @@ export const Header = () => {
                     </li>
                     <li>
                         <NavLink
-                            to='/graphics'
+                            to='/revenue/graphics'
                             className={({ isActive }) => isActive ? 'font-semibold pointer-events-none' : undefined}
                         >
                             Graphics
@@ -89,7 +89,7 @@ export const Header = () => {
                     </li>
                     <li>
                         <NavLink
-                            to='/revenue'
+                            to='/revenue/overview'
                             className={({ isActive }) => isActive ? 'font-semibold' : undefined}
                             onClick={handleLinkClick}
                         >
@@ -98,7 +98,7 @@ export const Header = () => {
                     </li>
                     <li>
                         <NavLink
-                            to='/graphics'
+                            to='/revenue/graphics'
                             className={({ isActive }) => isActive ? 'font-semibold' : undefined}
                             onClick={handleLinkClick}
                         >
