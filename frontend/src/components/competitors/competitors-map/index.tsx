@@ -29,8 +29,7 @@ export const CompetitorsMap = () => {
 
             {error && (
                 <div className="error-message">Error: {error.message}</div>
-            )}
-
+            )} 
             {!loading && !error && (
                 <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
                     <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={17}>
