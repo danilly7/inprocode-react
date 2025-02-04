@@ -3,6 +3,10 @@ import { useCompetitorsContext } from "../../../context/competitors-context";
 export const CompetitorsTable: React.FC = () => {
     const { competitor, loading, error } = useCompetitorsContext();
 
+    const uniqueCompetitors = competitor.filter((value, index, self) =>
+        index === self.findIndex((c) => c.id_competitor === value.id_competitor)
+    );
+
     return (
         <div className="overflow-x-auto mb-6">
 
@@ -31,7 +35,7 @@ export const CompetitorsTable: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody className="text-sm text-gray-700">
-                        {competitor.map((competitor, index) => (
+                        {uniqueCompetitors.map((competitor, index) => (
                             <tr
                                 key={index}
                                 className={`border-b ${competitor.name === 'La Teca de l\'Àvia' ? 'bg-yellow-100' : ''}`}
@@ -49,10 +53,10 @@ export const CompetitorsTable: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-1 gap-6 sm:grid lg:hidden mt-6">
-                {competitor.map((competitor, index) => (
+                {uniqueCompetitors.map((competitor, index) => (
                     <div
                         key={index}
-                        className={`bg-white border border-gray-200 shadow-md rounded-lg p-4 space-y-2 ${competitor.color}`}
+                        className={`bg-white border border-gray-200 shadow-md rounded-lg p-4 space-y-2 ${competitor.color} ${competitor.name === 'La Teca de l\'Àvia' ? 'bg-yellow-100' : ''}`}
                     >
                         <h3 className="text-lg font-semibold">{competitor.name}</h3>
                         <p><strong>Address:</strong> {competitor.address}</p>

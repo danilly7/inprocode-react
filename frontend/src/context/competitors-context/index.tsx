@@ -1,6 +1,6 @@
-import { createContext, useContext, ReactNode, useState, useEffect } from 'react';
+import { createContext, useContext, ReactNode } from 'react';
 import { Competitor } from '../../components/competitors/interface';
-import { useFetch } from '../../hooks/useFetch';
+import { useFetchAll } from '../../hooks/useFetchAll';
 import { apiCompetitors } from '../../api';
 
 interface CompetitorsContextProps {
@@ -12,22 +12,14 @@ interface CompetitorsContextProps {
 const CompetitorsContext = createContext<CompetitorsContextProps | undefined>(undefined);
 
 export const CompetitorsProvider = ({ children }: { children: ReactNode }) => {
-    const { data, loading, error } = useFetch<Competitor>(apiCompetitors, 1);
-    const [competitor, setCompetitor] = useState<Competitor[]>([]);
+    const { data, loading, error } = useFetchAll<Competitor>(apiCompetitors, true);
 
-    useEffect(() => {
-        if (data?.data) {
-            const uniqueCompetitors = data.data.filter((value, index, self) =>
-                index === self.findIndex((c) => c.id_competitor === value.id_competitor)
-            );
-            setCompetitor(uniqueCompetitors);
-        }
-    }, [data]);
+    const competitors = data?.data || [];
 
     return (
         <CompetitorsContext.Provider
             value={{
-                competitor,
+                competitor: competitors,
                 loading,
                 error,
             }}>

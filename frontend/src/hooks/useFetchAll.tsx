@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export function useFetchAll<T>(url: string) {
+export function useFetchAll<T>(url: string, isCompetitors: boolean = false) {
     const [data, setData] = useState<{ data: T[] }>({ data: [] });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
@@ -15,11 +15,17 @@ export function useFetchAll<T>(url: string) {
                 return response.json();
             })
             .then((json) => {
-                setData({ data: Array.isArray(json.data) ? json.data : [] });
+                if (isCompetitors) {
+                    // Si es para competidores, accede a rows
+                    setData({ data: Array.isArray(json.data?.rows) ? json.data.rows : [] });
+                } else {
+                    // Si es para eventos, accede a data
+                    setData({ data: Array.isArray(json.data) ? json.data : [] });
+                }
             })
             .catch((error) => setError(error))
             .finally(() => setLoading(false));
-    }, [url]);
+    },  [url, isCompetitors]);
 
     return { data, loading, error };
 };

@@ -7,6 +7,6 @@ export interface Competitor {
     price: string;
     hours: string;
     color: string;
-    latitude: number;
-    longitude: number;
+    latitude: string;
+    longitude: string;
 };

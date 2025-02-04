@@ -16,7 +16,7 @@ interface CalendarContextProps {
 const CalendarContext = createContext<CalendarContextProps | undefined>(undefined);
 
 export const CalendarProvider = ({ children }: { children: ReactNode }) => {
-    const { data, loading, error } = useFetchAll<CalendarEvent>(apiCalendar);
+    const { data, loading, error } = useFetchAll<CalendarEvent>(apiCalendar, false);
     const [event, setEvent] = useState<CalendarEvent[]>([]);
 
     useEffect(() => {
