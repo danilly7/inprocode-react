@@ -136,6 +136,12 @@ This project is a **business insight** tool designed from the perspective of a r
        cd backend
     ````
 
+  - Install the backend dependencies:
+  
+    ````bash
+       npm install
+    ````
+
   - Create the .env file:
 
     Copy the .env.example file and create a new .env file in the backend folder.
