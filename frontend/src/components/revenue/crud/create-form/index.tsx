@@ -9,7 +9,10 @@ interface AddRevenueFormProps {
 
 export const AddRevenueForm: React.FC<AddRevenueFormProps> = ({ onSuccess }) => {
     const [title, setTitle] = useState('');
-    const [date, setDate] = useState('');
+    const [date, setDate] = useState(() => {
+        const today = new Date();
+        return today.toISOString().split('T')[0];
+    });
     const [closed, setClosed] = useState(false);
     const [bankHoliday, setBankHoliday] = useState(false);
     const [totalSales, setTotalSales] = useState<number | "">("");
@@ -18,9 +21,13 @@ export const AddRevenueForm: React.FC<AddRevenueFormProps> = ({ onSuccess }) => 
     const [error, setError] = useState<string | null>(null);
     const [weekdayId, setWeekdayId] = useState<number>(0);
     const [showModal, setShowModal] = useState(false);
-    
-    const {dayrev} = useRevenueContext();
-   
+
+    const { dayrev } = useRevenueContext();
+
+    const today = new Date(); //sino da problemas a medianoche o así
+    const offset = today.getTimezoneOffset();
+    const localToday = new Date(today.getTime() - (offset * 60 * 1000)).toISOString().split('T')[0];
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -111,7 +118,7 @@ export const AddRevenueForm: React.FC<AddRevenueFormProps> = ({ onSuccess }) => 
                         onChange={handleDateChange}
                         className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                         required
-                        max={new Date().toISOString().split('T')[0]}
+                        max={localToday}
                     />
                 </div>
                 <div className="mb-4 flex items-center">
