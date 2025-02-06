@@ -68,7 +68,7 @@ This project is a **business insight** tool designed from the perspective of a r
 - [x] Reusable components
 - [x] URL parameters
 - [x] Centralized and dynamic routing
-- [x] Deployed with Vercel
+- [x] Deployed with Vercel - only works when server is running
 
 ### Backend (Server-side)
 - [x] API for revenue data management
