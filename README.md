@@ -1,4 +1,4 @@
-# SPRINT 8 - Inprocode (React)
+# Inprocode (React)
 ## Description
 
 This project is a **business insight** tool designed from the perspective of a rotisserie. The application tracks daily revenue, provides interactive charts to visualize sales trends, and includes a competitor map for analyzing the local market. Additionally, it features a holiday calendar that highlights peak business days and offers full CRUD functionality for efficient data management.
